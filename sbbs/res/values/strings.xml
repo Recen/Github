@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="app_name">sbbs</string>
+    
+    <string name="loading">正在加载...</string>
+     <!-- 分区相关 -->
+    <string name="section_0">(0)本站系统</string>
+    <string name="section_1">(1)东南大学</string>
+    <string name="section_2">(2)电脑技术</string>
+    <string name="section_3">(3)学术科学</string>
+    <string name="section_4">(4)艺术文化</string>
+    <string name="section_5">(5)乡情校谊</string>
+    <string name="section_6">(6)休闲娱乐</string>
+    <string name="section_7">(7)知性感性</string>
+    <string name="section_8">(8)人文信息</string>
+    <string name="section_9">(9)体坛风暴</string>
+    <string name="section_a">(A)校务信箱</string>
+    <string name="section_b">(B)社团群体</string>
+    
+     <!-- 下拉刷新 -->
+    <string name="pull_to_refresh_tap_label">下拉刷新</string>
+    <string name="pull_to_refresh_pull_label">下拉刷新</string>
+    <string name="pull_to_refresh_refreshing_label">刷新</string>
+    <string name="pull_to_refresh_release_label">释放刷新</string>
+    <string name="pull_to_refresh_update_time">最近更新</string>
+
+</resources>
