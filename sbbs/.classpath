@@ -5,6 +5,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry exported="true" kind="lib" path="E:/Android/workspace/sbbs-android-app-master/libs/httpmime-4.0-beta2.jar"/>
+	<classpathentry kind="lib" path="E:/Android/workspace/sbbs-android-app-master/libs/httpmime-4.0-beta2.jar"/>
+	<classpathentry kind="lib" path="E:/Android/workspace/sbbs-android-app-master/libs/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

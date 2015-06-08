@@ -10,15 +10,19 @@ import org.json.JSONObject;
 
 import utli.BBSOperator;
 import utli.HttpException;
-import utli.MyListView;
-import utli.PostHelper;
-import utli.SBBSURLS;
-import utli.TaskResult;
-import utli.Topic;
+import utli.MyApplication;
 
 import com.recen.sbbs.R;
 
+import db.TopicDAO;
+import db.TopicTable;
+
 import Adapter.ToptenAdapter;
+import Model.MyListView;
+import Model.PostHelper;
+import Model.SBBSURLS;
+import Model.TaskResult;
+import Model.Topic;
 import Task.GenericTask;
 import Task.TaskAdapter;
 import Task.TaskListener;
@@ -46,8 +50,9 @@ public class hotspot_fragment extends Fragment{
 
 	private static final String TAG = "hotspot_fragment";
 	private boolean isFirstLoad = true, hasMoreData = true;
+	private boolean forceLoad = false, isLoaded = false;
 	private int start = 0;
-	private ListView hotListView;
+	private MyListView hotListView;
 	private LayoutInflater mInflater;
 	private ToptenAdapter myAdapter;
 	private String hoturl;
@@ -56,6 +61,7 @@ public class hotspot_fragment extends Fragment{
 	private View view;
 	private GenericTask mRetrieveTask;
 	private int headPosition = 0;
+	private int type = TopicTable.TYPE_HOT;
 	private static final int LOADNUM = 20;
     
 	private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
@@ -78,8 +84,8 @@ public class hotspot_fragment extends Fragment{
 		public void onPostExecute(GenericTask task, TaskResult result) {
 			super.onPostExecute(task, result);
 			pdialog.cancel();
-			//isLoaded = true;
-			//hotListView.onRefreshComplete();
+			isLoaded = true;
+			hotListView.onRefreshComplete();
 			processResult(result);
 		}
 
@@ -95,7 +101,10 @@ public class hotspot_fragment extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		initArgs();
 		bindListener();
-		doRetrieve();
+		if (isFirstLoad) {
+			doRetrieve();
+		}
+		
 		
 	}
 
@@ -106,14 +115,15 @@ public class hotspot_fragment extends Fragment{
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		
-		view = inflater.inflate(com.recen.sbbs.R.layout.hot_fragment, null);
+		view = inflater.inflate(com.recen.sbbs.R.layout.list_without_header, null);
 
 		return view;
 	}
 	
 	private void initArgs() {
-		hotListView = (ListView)view.findViewById(R.id.myList);
-		hotListView.setVerticalScrollBarEnabled(true);
+		hotListView = (MyListView)view.findViewById(R.id.my_list);
+		//hotListView.setVerticalScrollBarEnabled(true);
+		isFirstLoad = true;
 		myAdapter = new ToptenAdapter(getActivity());
 		hotListView.setAdapter(myAdapter);
 		hoturl = SBBSURLS.HOTURL;		
@@ -136,6 +146,17 @@ public class hotspot_fragment extends Fragment{
 			}
 		});
 		
+		hotListView.setonRefreshListener(new MyListView.OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				start = 0;
+				forceLoad = true;
+				isFirstLoad = true;
+				doRetrieve();
+			}
+		});
+		
 	}
 	
 	private void doRetrieve() {
@@ -154,7 +175,13 @@ public class hotspot_fragment extends Fragment{
 		@Override
 		protected TaskResult _doInBackground(String... params) {
 			// TODO Auto-generated method stub
+			TopicDAO topicDAO = new TopicDAO(MyApplication.mContext);
+			List<Topic> list = topicDAO.fetchTopics(type);
 			List<Topic>newList = new ArrayList<Topic>();
+			if (list.size() != 0 ) {
+				hotList = list;
+				Log.i(TAG, "get topics from database");
+			} else {
 			try {
 				newList = BBSOperator.getInstance().getTopicList(params[0]);
 				
@@ -176,15 +203,19 @@ public class hotspot_fragment extends Fragment{
 			} else {
 				hasMoreData = true;
 			}
+			topicDAO.deleteList(type);
+			long id = topicDAO.insertTopic(hotList, type);
 			isFirstLoad = false;
 			start = hotList.size();
 			if (hotList.size() == 0) {
 				return TaskResult.NO_DATA;
 			}
-			return TaskResult.OK;
+			
 		}
+			return TaskResult.OK;
 	}
-		
+	
+}	
 		
 	private void processResult(TaskResult result) {
 		if (TaskResult.Failed == result) {
@@ -209,8 +240,8 @@ public class hotspot_fragment extends Fragment{
 	}
 
 	private Topic getContextItemTopic(int position) {
-		if (position >= 0 && position <= myAdapter.getCount()) {
-			return (Topic) myAdapter.getItem(position);
+		if (position >= 1 && position <= myAdapter.getCount()) {
+			return (Topic) myAdapter.getItem(position-1);
 		}
 		return null;
 	}

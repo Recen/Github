@@ -4,13 +4,14 @@ import java.util.List;
 
 import utli.BBSOperator;
 import utli.HttpException;
-import utli.PostHelper;
-import utli.TaskResult;
-import utli.Topic;
 
 import com.recen.sbbs.R;
 
 import Adapter.ToptenAdapter;
+import Model.MyListView;
+import Model.PostHelper;
+import Model.TaskResult;
+import Model.Topic;
 import Task.GenericTask;
 import Task.TaskAdapter;
 import Task.TaskListener;
@@ -36,12 +37,13 @@ public class TopicList extends FragmentActivity{
 	private View moreView;
 	private TextView moreBtn;
 	private LinearLayout progressbar;
-	private ListView topicListView;
+	private MyListView topicListView;
 	private GenericTask mRetrieveTask;
 	private String boardID;
 	private String baseURL;
 	private String url,errorCause;
 	private boolean isFirstLoad = true, hasMoreData = true;
+	private boolean forceLoad = false, isLoaded = false;
 	private int headPosition = 0;
 	private static final int LOADNUM = 20;
 	private int start = 0;
@@ -72,6 +74,8 @@ public class TopicList extends FragmentActivity{
 			// TODO Auto-generated method stub
 			super.onPostExecute(task, result);
 			pdialog.dismiss();
+			isLoaded = true;
+			topicListView.onRefreshComplete();
 			handleRetrieveResult(result);
 			processResult(result);
 		}
@@ -93,7 +97,7 @@ public class TopicList extends FragmentActivity{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.topiclist);
 		
-		topicListView = (ListView)findViewById(R.id.topicList);
+		topicListView = (MyListView)findViewById(R.id.topicList);
 		initArgs();
 		bindListener();
 		topicListView.addFooterView(moreView);
@@ -144,6 +148,16 @@ public class TopicList extends FragmentActivity{
 				doLoadMore();
 			}
 		});
+		
+		topicListView.setonRefreshListener(new MyListView.OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				start = 0;
+				isFirstLoad = true;
+				doRetrieve();
+			}
+		});
 	}
 	
 	private void doLoadMore() {
@@ -153,8 +167,8 @@ public class TopicList extends FragmentActivity{
 	}
 	
 	private Topic getContextItemTopic(int position) {
-		if (position >= 0 && position <= topicAdapter.getCount()) {
-			return (Topic) topicAdapter.getItem(position);
+		if (position >= 1 && position <= topicAdapter.getCount()) {
+			return (Topic) topicAdapter.getItem(position-1);
 		}
 		return null;
 	}
@@ -167,6 +181,7 @@ public class TopicList extends FragmentActivity{
 		mRetrieveTask = new TopicTask();
 		mRetrieveTask.setListener(getContenTaskListener);
 		url = baseURL.concat("&start=" + start + "&mode=" + mode);
+		Log.i(TAG, "topicList-->"+url);
 		mRetrieveTask.execute(url);
 
 		Log.i(TAG, TAG + "-->doRetrieve");
@@ -188,7 +203,7 @@ public class TopicList extends FragmentActivity{
 			}
 			if (isFirstLoad) {
 				topicList = newList;
-				headPosition = 0;
+				headPosition = 1;
 			} else {
 				headPosition = topicList.size()-1;
 				if (0 == topicList.size()) {

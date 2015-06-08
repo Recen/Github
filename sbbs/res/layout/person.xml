@@ -27,6 +27,14 @@
             android:layout_gravity="center_vertical"    
             android:background="#21AB38"      
             android:text="登录"/>
+        <TextView 
+            android:id="@+id/personName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="25dp" 
+            android:visibility="gone"/>
     </LinearLayout>
     
     <LinearLayout 
@@ -44,6 +52,7 @@
             android:text="我的帖子"
             android:textSize="20dp"/>
          <TextView 
+            android:id="@+id/myEmail"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center_vertical"
@@ -76,7 +85,8 @@
             android:text="好友列表"
             android:textSize="20dp"/>
             
-            <TextView 
+            <TextView
+            android:id="@+id/setting" 
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center_vertical"

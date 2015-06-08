@@ -5,14 +5,15 @@ import java.util.List;
 
 import utli.BBSOperator;
 import utli.HttpException;
-import utli.PostHelper;
-import utli.SBBSURLS;
-import utli.TaskResult;
-import utli.Topic;
 
 import com.recen.sbbs.R;
 
 import Adapter.TopReplyAdapter;
+import Model.MyListView;
+import Model.PostHelper;
+import Model.SBBSURLS;
+import Model.TaskResult;
+import Model.Topic;
 import Task.GenericTask;
 import Task.TaskAdapter;
 import Task.TaskListener;
@@ -32,7 +33,8 @@ import android.widget.Toast;
 public class dialogActivity extends FragmentActivity{
 	
 	private static final String TAG = "dialogActivity";
-	public ListView myListView;
+	public MyListView myListView;
+	private boolean forceLoad = false, isLoaded = false;
 	private View moreView;
 	private TextView moreBtn;
 	private LinearLayout progressbar;
@@ -72,6 +74,8 @@ public class dialogActivity extends FragmentActivity{
 			// TODO Auto-generated method stub
 			super.onPostExecute(task, result);
 			pdialog.dismiss();
+			isLoaded = true;
+			myListView.onRefreshComplete();
 			handleRetrieveResult(result);
 			processResult(result);
 		}
@@ -91,8 +95,8 @@ public class dialogActivity extends FragmentActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.list_without_header);
-		myListView = (ListView)findViewById(R.id.mydialog_list);
+		setContentView(R.layout.list_of_dialog);
+		myListView = (MyListView)findViewById(R.id.my_list);
 		initAtgs();
 		bindListener();
 		myListView.addFooterView(moreView);
@@ -124,6 +128,18 @@ public class dialogActivity extends FragmentActivity{
 				doLoadMore();
 			}
 		});
+		
+		myListView.setonRefreshListener(new MyListView.OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				start = 0;
+				isFirstLoad = true;
+				doRetrieve();
+			}
+		});
+		
+		
 	}
 	private void doLoadMore() {
 		moreBtn.setVisibility(View.GONE);
@@ -139,9 +155,8 @@ public class dialogActivity extends FragmentActivity{
 		mRetrieveTask = new TopicTask();
 		mRetrieveTask.setListener(getContenTaskListener);
 		url = baseUrl.concat("&start=" + start);
+		Log.i(TAG, "campus url = "+url);
 		mRetrieveTask.execute(url);
-
-		Log.i(TAG, TAG + "-->doRetrieve");
 	}
 	
 	private class TopicTask extends GenericTask{

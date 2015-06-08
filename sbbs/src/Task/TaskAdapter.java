@@ -1,6 +1,6 @@
 package Task;
 
-import utli.TaskResult;
+import Model.TaskResult;
 
 
 

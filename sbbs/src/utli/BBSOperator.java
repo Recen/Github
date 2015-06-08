@@ -6,10 +6,16 @@ import java.util.List;
 import http.HttpClient;
 import http.Response;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import Model.Board;
+import Model.SBBSURLS;
+import Model.Topic;
+import Model.User;
 import android.util.Log;
 
 public class BBSOperator {
@@ -53,6 +59,16 @@ public class BBSOperator {
 	public JSONObject getJson(String url) throws HttpException {
 		return get(url).asJSONObject();
 	}
+	
+	public JSONObject getJson(String url, List<BasicNameValuePair> params)
+			throws HttpException {
+		return post(url, params).asJSONObject();
+	}
+	public Response post(String url, List<BasicNameValuePair> params)
+			throws HttpException {
+		return mClient.httpRequest(url, null, params);
+	}
+	
 	public Response get(String url) throws HttpException {
 		return mClient.httpRequest(url);
 	}
@@ -67,14 +83,44 @@ public class BBSOperator {
 				JSONObject groupJson = groupArray.getJSONObject(i);
 				JSONArray boardsJson = groupJson.getJSONArray("boards");
 				List<Board> list = Board.parseBoardArray(boardsJson, false);
-				
-				Log.i(TAG, " dada--"+list.get(0).getTitle());
-				//Log.i(TAG, " dada--"+list.get(1).getId());
+			
 				allBoardList.add(list);
 			}
 		} catch (JSONException e) {
 			throw new HttpException(e.getMessage(), e);
 		}
 		return allBoardList;
+	}
+	
+	public User doLogin(String name, String passWord) throws HttpException {
+		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+		params.add(new BasicNameValuePair("user", name));
+		params.add(new BasicNameValuePair("pass", passWord));
+		return User.parseLogin(getJsonSuccess(SBBSURLS.LOGIN_URL, params));
+	}
+	
+	public JSONObject getJsonSuccess(String url, List<BasicNameValuePair> params)
+			throws HttpException {
+		boolean success = false;
+		JSONObject obj = getJson(url, params);
+		try {
+			success = obj.getBoolean("success");
+
+			if (success) {
+				Log.i(TAG, "reply or post success");
+				return obj;
+			} else {
+				String error = obj.getString("error");
+				Log.i(TAG, "reply or post error");
+				throw new HttpException(error);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			throw new HttpException(e.getMessage(), e);
+		}
+	}
+	
+	public User getUserProfile(String url) throws HttpException {
+		return User.getUser(getJsonSuccess(url));
 	}
 }

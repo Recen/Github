@@ -1,6 +1,29 @@
 package activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import utli.BBSOperator;
+import utli.HttpException;
+import utli.MyApplication;
+
+import com.recen.sbbs.R;
+
+import db.TopicDAO;
+import db.TopicTable;
+
+import Adapter.ToptenAdapter;
+import Model.MyListView;
+import Model.PostHelper;
+import Model.SBBSURLS;
+import Model.TaskResult;
+import Model.Topic;
+import Task.GenericTask;
+import Task.TaskAdapter;
+import Task.TaskListener;
 import android.R.integer;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,72 +31,206 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class campus_fragment extends Fragment{
-	
+
 	private static final String TAG = "campus_fragment";
+	private boolean isFirstLoad = true, hasMoreData = true;
+	private boolean forceLoad = false, isLoaded = false;
+	private int start = 0;
+	private MyListView campusListView;
+	private LayoutInflater mInflater;
+	private ToptenAdapter myAdapter;
+	private String campusurl;
+	private List<Topic> campusList;
+	private Button refreshButton;
+	private View view;
+	private int type = TopicTable.TYPE_CAMPUS;
+	private GenericTask mRetrieveTask;
+	private int headPosition = 0;
+	private static final int LOADNUM = 20;
+    
+	private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
+		ProgressDialog pdialog;
+
+		@Override
+		public String getName() {
+			return "mRetrieveHotTaskListener";
+		}
+
+		@Override
+		public void onPreExecute(GenericTask task) {
+			super.onPreExecute(task);
+			pdialog = new ProgressDialog(getActivity());
+			pdialog.setMessage(getResources().getString(R.string.loading));
+			pdialog.show();
+		}
+
+		@Override
+		public void onPostExecute(GenericTask task, TaskResult result) {
+			super.onPostExecute(task, result);
+			pdialog.cancel();
+			isLoaded = true;
+			campusListView.onRefreshComplete();
+			processResult(result);
+		}
+
+	};
+
+
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 */
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		initArgs();
+		bindListener();
+		doRetrieve();
+		
+	}
+
+
 	
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onCreate");
-		super.onCreate(savedInstanceState);
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onDestroy()
-	 */
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onDestroy");
-		super.onDestroy();
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onDetach()
-	 */
-	@Override
-	public void onDetach() {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onDetach");
-		super.onDetach();
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onPause()
-	 */
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onPause");
-		super.onPause();
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onResume()
-	 */
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onResume");
-		super.onResume();
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onStop()
-	 */
-	@Override
-	public void onStop() {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onStop");
-		super.onStop();
-	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View view = inflater.inflate(com.recen.sbbs.R.layout.campus_fragment, null);
+		
+		view = inflater.inflate(com.recen.sbbs.R.layout.list_without_header, null);
+
 		return view;
 	}
+	
+	private void initArgs() {
+		campusListView = (MyListView)view.findViewById(R.id.my_list);
+		isFirstLoad = true;
+		//hotListView.setVerticalScrollBarEnabled(true);
+		myAdapter = new ToptenAdapter(getActivity());
+		campusListView.setAdapter(myAdapter);
+		campusurl = "http://bbs.seu.edu.cn/api/board/AcademicEvents.json?limit="+LOADNUM +"&start=0&mode=2";		
+	}
+	
+	private void bindListener(){
+		campusListView.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Topic topic = getContextItemTopic(position);
+				Log.i(TAG, "--->"+topic.getTitle());
+				Intent intent = new Intent(getActivity(), dialogActivity.class);
+				intent.putExtra(PostHelper.EXTRA_ID, topic.getId());
+				intent.putExtra(PostHelper.EXTRA_TITLE, topic.getTitle());
+				intent.putExtra(PostHelper.EXTRA_BOARD, topic.getBoardName());
+				startActivity(intent);
+			}
+		});
+		
+		campusListView.setonRefreshListener(new MyListView.OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				start = 0;
+				isFirstLoad = true;
+				doRetrieve();
+			}
+		});
+		
+	}
+	
+	private void doRetrieve() {
+		if (null != mRetrieveTask
+				&& GenericTask.Status.RUNNING == mRetrieveTask.getStatus()) {
+			return;
+		}
+		mRetrieveTask = new RetrieveCampusTask();
+		mRetrieveTask.setListener(mRetrieveHotTaskListener);
+		mRetrieveTask.execute(campusurl);
+
+		Log.i(TAG, TAG + "-->doRetrieve");
+	}
+	
+	private class RetrieveCampusTask extends GenericTask{
+		@Override
+		protected TaskResult _doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			TopicDAO topicDAO = new TopicDAO(MyApplication.mContext);
+			List<Topic> list = topicDAO.fetchTopics(type);
+			List<Topic>newList = new ArrayList<Topic>();
+			if (list.size() != 0 && !forceLoad) {
+				campusList = list;
+				Log.i(TAG, "get topics from database");
+			} else {
+				try {
+					newList = BBSOperator.getInstance().getTopicList(params[0]);
+					
+					} catch (HttpException e) {
+						// TODO Auto-gsenerated catch block
+						e.printStackTrace();
+						e.getMessage();
+						return TaskResult.Failed;
+					}
+				if (isFirstLoad) {
+					campusList = newList;
+					headPosition = 0;
+				} else {
+					headPosition = campusList.size()-1;
+					campusList.addAll(newList);
+				}
+				if (newList.size() < LOADNUM) {
+					hasMoreData = false;
+				} else {
+					hasMoreData = true;
+				}
+				topicDAO.deleteList(type);
+				long id = topicDAO.insertTopic(campusList, type);
+				isFirstLoad = false;
+				start = campusList.size();
+				if (campusList.size() == 0) {
+					return TaskResult.NO_DATA;
+				}		
+			}
+			return TaskResult.OK;
+		}
+	
+	}
+		
+		
+	private void processResult(TaskResult result) {
+		if (TaskResult.Failed == result) {
+//			Toast.makeText(MyApplication.mContext, errorCause,
+//					Toast.LENGTH_SHORT).show();
+			Log.i(TAG, "Failed");
+			return;
+		}
+		if (result == TaskResult.NO_DATA) {
+//			Toast.makeText(MyApplication.mContext, R.string.hot_no_data,
+//					Toast.LENGTH_SHORT).show();
+			Log.i(TAG, "No Data");
+			return;
+		}
+		draw();
+		//goTop();
+
+	}	
+	
+	private void draw() {
+		myAdapter.refresh(campusList);
+	}
+
+	private Topic getContextItemTopic(int position) {
+		if (position >= 1 && position <= myAdapter.getCount()) {
+			return (Topic) myAdapter.getItem(position-1);
+		}
+		return null;
+	}
+
+
+	
 }

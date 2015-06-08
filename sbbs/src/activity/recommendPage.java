@@ -1,10 +1,18 @@
 package activity;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.xmlpull.v1.XmlPullParserException;
 
+import utli.MyApplication;
+
+
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -24,68 +32,18 @@ import com.recen.sbbs.R;
 
 public class recommendPage extends Fragment {
 	private static final String TAG = "recommendPage";
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onCreate");
-		super.onCreate(savedInstanceState);
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onDestroy()
-	 */
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onDestroy");
-		super.onDestroy();
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onPause()
-	 */
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onPause");
-		super.onPause();
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onResume()
-	 */
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onResume");
-		super.onResume();
-	}
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onStop()
-	 */
-	@Override
-	public void onStop() {
-		// TODO Auto-generated method stub
-		Log.i(TAG, "-----------onStop");
-		super.onStop();
-	}
-
 	Resources resources;
     private ViewPager mPager;
     private ArrayList<Fragment> fragmentsList;
     private ImageView ivBottomLine;
-    private TextView tvTabNew, tvTabHot,tvTabCampus;
-
+    private TextView tvTabHot,tvTabCampus;
+    private XmlResourceParser green,balck;
+    private ColorStateList csl;
     private int currIndex = 0;
     private int bottomLineWidth;
     private int offset = 0;
     private int position_one;
-    private int position_two;
+   
     public final static int num = 2 ; 
     Fragment home1;
     Fragment home2;
@@ -95,12 +53,24 @@ public class recommendPage extends Fragment {
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.recommend, null);
+		TranslateAnimation animation;
 		resources = getResources();
-        InitWidth(view);
+		InitWidth(view);
         InitTextView(view);
         InitViewPager(view);
-        TranslateAnimation animation = new TranslateAnimation(position_one, offset, 0, 0);
-        //tvTabHot.setTextColor(resources.getColor(R.color.lightwhite));
+		if(savedInstanceState ==null){
+			Fragment fragment = (Fragment)getChildFragmentManager().findFragmentByTag(0+"");// getActivity().getSupportFragmentManager().findFragmentByTag(index+""); 
+			if(fragment==null){
+				
+			}
+		}
+		 Log.i(TAG, "onCreateView");
+		if(currIndex == 0){
+			animation = new TranslateAnimation(position_one, offset, 0, 0);
+		}else {
+			animation = new TranslateAnimation(offset, position_one, 0, 0);
+		}
+        
         animation.setFillAfter(true);
         animation.setDuration(300);
         ivBottomLine.startAnimation(animation);
@@ -108,11 +78,16 @@ public class recommendPage extends Fragment {
 	}
 	
 	 private void InitTextView(View parentView) {
-	        tvTabNew = (TextView) parentView.findViewById(R.id.tv_tab_1);
-	        tvTabHot = (TextView) parentView.findViewById(R.id.tv_tab_2);
+	        tvTabHot = (TextView) parentView.findViewById(R.id.tv_tab_1);
+	        tvTabCampus = (TextView) parentView.findViewById(R.id.tv_tab_2);
+	        if(currIndex == 0){
+	        	tvTabHot.setTextColor(Color.rgb(33, 171, 56));
+			}else {
+				tvTabCampus.setTextColor(Color.rgb(33, 171, 56));
+			}
 	       
-	        tvTabNew.setOnClickListener(new MyOnClickListener(0));
-	        tvTabHot.setOnClickListener(new MyOnClickListener(1));	 
+	        tvTabHot.setOnClickListener(new MyOnClickListener(0));
+	        tvTabCampus.setOnClickListener(new MyOnClickListener(1));	 
 	    }
 
 	    private void InitViewPager(View parentView) {
@@ -126,10 +101,10 @@ public class recommendPage extends Fragment {
 	        fragmentsList.add(home1);
 	        fragmentsList.add(home2);
 	       
-	        
+	        Log.v(TAG, "InitViewPager");
 	        mPager.setAdapter(new MyFragmentPagerAdapter(getChildFragmentManager(), fragmentsList));
 	        mPager.setOnPageChangeListener(new MyOnPageChangeListener());
-	        mPager.setCurrentItem(0);
+	        mPager.setCurrentItem(currIndex);
 	        
 	    }
 
@@ -142,9 +117,7 @@ public class recommendPage extends Fragment {
 	        offset = (int) ((screenW / num - bottomLineWidth) / 2);
 	        int avg = (int) (screenW / num);
 	        position_one = avg + offset;
-	       
-	        
-	        
+	       	        
 	    }
 
 	    public class MyOnClickListener implements View.OnClickListener {
@@ -169,21 +142,28 @@ public class recommendPage extends Fragment {
 	            case 0:
 	                if (currIndex == 1) {
 	                    animation = new TranslateAnimation(position_one, offset, 0, 0);
-	                    //tvTabHot.setTextColor(resources.getColor(R.color.lightwhite));
-	                }
-	                //tvTabNew.setTextColor(resources.getColor(R.color.white));
+	                    tvTabCampus.setTextColor(Color.rgb(0, 0, 0));
+	                    tvTabHot.setTextColor(Color.rgb(33, 171, 56));
+	                    animation.setFillAfter(true);
+	    	            animation.setDuration(300);
+	                    ivBottomLine.startAnimation(animation);
+	                   
+	                }           
 	                break;
 	            case 1:
 	                if (currIndex == 0) {
 	                    animation = new TranslateAnimation(offset, position_one, 0, 0);
-	                    //tvTabNew.setTextColor(resources.getColor(R.color.lightwhite));
-	                } 
-	           
+	                    animation.setFillAfter(true);
+	    	            animation.setDuration(300);
+	                    ivBottomLine.startAnimation(animation);
+	                    tvTabHot.setTextColor(Color.rgb(0, 0, 0));
+	                    tvTabCampus.setTextColor(Color.rgb(33, 171, 56));
+	                    
+	                }       
 	            }
 	            currIndex = arg0;
-	            animation.setFillAfter(true);
-	            animation.setDuration(300);
-	            ivBottomLine.startAnimation(animation);
+	            
+//	            ivBottomLine.startAnimation(animation);
 	        }
 
 	        @Override

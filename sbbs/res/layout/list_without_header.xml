@@ -3,29 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
 
     >
     <!--     android:background="#f6f6f6" -->
     
-       <ListView
-        android:id="@+id/mydialog_list"
+       <Model.MyListView
+        android:id="@+id/my_list"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:cacheColorHint="#00000000"
-        android:dividerHeight="1dp"
+        android:divider="@color/white"
+        android:dividerHeight="10dp"
+        android:background="@color/white"        
         android:fadeScrollbars="true"
+        android:scrollbars="none"
         android:fadingEdge="none"
         android:fastScrollEnabled="true" >
-    </ListView>
+      </Model.MyListView>
 
        <View 
            android:id="@+id/re_devider"
            android:layout_width="fill_parent"
            android:layout_height="2dp"
-           
+           android:background="@color/link_color"
            android:paddingLeft="5dp"
            android:paddingRight="5dp"
            android:visibility="gone"

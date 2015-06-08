@@ -3,8 +3,8 @@ package Task;
 import java.util.Observable;
 import java.util.Observer;
 
-import utli.TaskResult;
 
+import Model.TaskResult;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;

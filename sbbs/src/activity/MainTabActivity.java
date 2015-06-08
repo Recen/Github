@@ -3,11 +3,13 @@ import com.recen.sbbs.R;
 
 import android.R.integer;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,10 +40,20 @@ public class MainTabActivity extends FragmentActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.maintab);		
-		initView();
+		setContentView(R.layout.maintab);
+		Intent intent = getIntent();
+		int type = getIntent().getIntExtra("personCenter", 0);
+		//if (type == 3) {
+		//	getSupportFragmentManager().beginTransaction().add(R.id.realtabcontent, new personalCenter()).commit();
+		//} else {
+			initView();
+		//}
+		
+		
 		
 	}
+	
+	
 	
 	private void initView(){
 		layoutInflater = LayoutInflater.from(this);

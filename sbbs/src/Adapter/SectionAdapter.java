@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utli.*;
+import Model.Board;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;

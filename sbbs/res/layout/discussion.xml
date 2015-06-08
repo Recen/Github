@@ -19,14 +19,41 @@
             android:textSize="20dp"
             android:textColor="#FFFFFF"/>
     </LinearLayout>
-    
-    <GridView 
-        android:id="@+id/disGridView"
+     <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:numColumns="2"
-        android:gravity="center"/>
+        android:layout_height="match_parent" >
+
+        <!-- The main content view -->
+
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+           <GridView 
+	        android:id="@+id/disGridView"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_marginTop="30dp"
+	        android:layout_gravity="center_vertical|center_horizontal"
+	        android:numColumns="2"
+	        android:gravity="center"/>
+        </FrameLayout>
+
+        <!-- The navigation drawer -->
+
+        <ListView
+            android:id="@+id/secList"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingLeft="10dp"
+            android:background="@color/aa_white"
+            android:choiceMode="singleChoice"
+            android:divider="@color/black"
+            android:dividerHeight="0dp" />
+    </android.support.v4.widget.DrawerLayout>
+    
 
 </LinearLayout>

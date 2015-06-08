@@ -13,8 +13,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import utli.SBBSURLS;
 
+import Model.SBBSURLS;
 import android.util.Log;
 
 
