@@ -137,6 +137,7 @@ public class campus_fragment extends Fragment{
 			@Override
 			public void onRefresh() {
 				start = 0;
+				forceLoad = true;
 				isFirstLoad = true;
 				doRetrieve();
 			}

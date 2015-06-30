@@ -7,5 +7,8 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="E:/Android/workspace/sbbs-android-app-master/libs/httpmime-4.0-beta2.jar"/>
 	<classpathentry kind="lib" path="E:/Android/workspace/sbbs-android-app-master/libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="libs/universal-image-loader-1.9.0.jar"/>
+	<classpathentry kind="src" path="/android-support-v7-appcompat"/>
+	<classpathentry kind="lib" path="/android-support-v7-appcompat/libs/android-support-v7-appcompat.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

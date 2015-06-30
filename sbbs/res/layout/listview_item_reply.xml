@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_marginBottom="2dp"
     android:layout_marginTop="2dp"
-    android:descendantFocusability="blocksDescendants"
+    android:descendantFocusability="blocksDescendants" 
     android:orientation="vertical"
     android:paddingBottom="4dp"
     android:paddingLeft="12dp"

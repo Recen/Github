@@ -178,7 +178,7 @@ public class hotspot_fragment extends Fragment{
 			TopicDAO topicDAO = new TopicDAO(MyApplication.mContext);
 			List<Topic> list = topicDAO.fetchTopics(type);
 			List<Topic>newList = new ArrayList<Topic>();
-			if (list.size() != 0 ) {
+			if (list.size() != 0 && !forceLoad) {
 				hotList = list;
 				Log.i(TAG, "get topics from database");
 			} else {

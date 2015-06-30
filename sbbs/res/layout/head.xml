@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pull_to_refresh_tap_label"
-                
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <!-- 最近更新 -->
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pull_to_refresh_update_time"
-               
+               android:textColor="@color/black"
                 android:textSize="10sp" />
         </LinearLayout>
     </RelativeLayout>

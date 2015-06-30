@@ -18,9 +18,10 @@ public final class R {
         public static final int gold=0x7f050003;
         public static final int gray=0x7f050006;
         public static final int green=0x7f05000a;
-        public static final int icon_text=0x7f05000b;
+        public static final int icon_text=0x7f05000c;
         public static final int link_color=0x7f050008;
         public static final int rbm_item_text_color=0x7f050007;
+        public static final int theme_gray=0x7f05000b;
         public static final int transparent=0x7f050002;
         public static final int white=0x7f050000;
     }
@@ -74,30 +75,35 @@ public final class R {
         public static final int lock_32px=0x7f020014;
         public static final int logo=0x7f020015;
         public static final int maintab_toolbar_bg=0x7f020016;
-        public static final int person=0x7f020017;
-        public static final int person_96=0x7f020018;
-        public static final int person_sel=0x7f020019;
-        public static final int person_sel_96=0x7f02001a;
-        public static final int pull_to_refresh_header_background=0x7f02001b;
-        public static final int recommend=0x7f02001c;
-        public static final int recommend_96px=0x7f02001d;
-        public static final int recommend_sel=0x7f02001e;
-        public static final int recommend_sel_96px=0x7f02001f;
-        public static final int tab_background=0x7f020020;
-        public static final int tab_dis_btn=0x7f020021;
-        public static final int tab_home_btn=0x7f020022;
-        public static final int tab_person_btn=0x7f020023;
-        public static final int tab_toptitle=0x7f020024;
-        public static final int titlebar=0x7f020025;
-        public static final int user_32px=0x7f020026;
-        public static final int user_default_photo=0x7f020027;
-        public static final int white=0x7f020028;
-        public static final int white1=0x7f020029;
-        public static final int write=0x7f02002a;
-        public static final int xianjian01=0x7f02002b;
-        public static final int xianjian02=0x7f02002c;
-        public static final int xianjian03=0x7f02002d;
-        public static final int xianjian04=0x7f02002e;
+        public static final int my_email=0x7f020017;
+        public static final int my_friends=0x7f020018;
+        public static final int my_setting=0x7f020019;
+        public static final int my_shoucang=0x7f02001a;
+        public static final int my_topic=0x7f02001b;
+        public static final int person=0x7f02001c;
+        public static final int person_96=0x7f02001d;
+        public static final int person_sel=0x7f02001e;
+        public static final int person_sel_96=0x7f02001f;
+        public static final int pull_to_refresh_header_background=0x7f020020;
+        public static final int recommend=0x7f020021;
+        public static final int recommend_96px=0x7f020022;
+        public static final int recommend_sel=0x7f020023;
+        public static final int recommend_sel_96px=0x7f020024;
+        public static final int tab_background=0x7f020025;
+        public static final int tab_dis_btn=0x7f020026;
+        public static final int tab_home_btn=0x7f020027;
+        public static final int tab_person_btn=0x7f020028;
+        public static final int tab_toptitle=0x7f020029;
+        public static final int titlebar=0x7f02002a;
+        public static final int user_32px=0x7f02002b;
+        public static final int user_default_photo=0x7f02002c;
+        public static final int white=0x7f02002d;
+        public static final int white1=0x7f02002e;
+        public static final int write=0x7f02002f;
+        public static final int xianjian01=0x7f020030;
+        public static final int xianjian02=0x7f020031;
+        public static final int xianjian03=0x7f020032;
+        public static final int xianjian04=0x7f020033;
     }
     public static final class id {
         public static final int PostTitle=0x7f07003c;
@@ -110,13 +116,13 @@ public final class R {
         public static final int back_btn=0x7f070046;
         public static final int btn_send_mail=0x7f07004b;
         public static final int cancleLetter=0x7f07006d;
-        public static final int content_frame=0x7f070008;
+        public static final int content_frame=0x7f070009;
         public static final int contents=0x7f07006b;
         public static final int current_user=0x7f070002;
-        public static final int disGridView=0x7f070009;
-        public static final int drawer_layout=0x7f070007;
+        public static final int disGridView=0x7f07000a;
+        public static final int drawer_layout=0x7f070008;
         public static final int experienceLayout=0x7f070065;
-        public static final int fav_item=0x7f07000c;
+        public static final int fav_item=0x7f070007;
         public static final int full_image=0x7f070000;
         public static final int genderLayout=0x7f070054;
         public static final int head_arrowImageView=0x7f07000e;
@@ -192,10 +198,10 @@ public final class R {
         public static final int re_devider=0x7f070015;
         public static final int realtabcontent=0x7f070029;
         public static final int recipients=0x7f070069;
-        public static final int secList=0x7f07000a;
+        public static final int secList=0x7f07000b;
         public static final int sendLetter=0x7f07006c;
         public static final int setting=0x7f070032;
-        public static final int textview=0x7f07000b;
+        public static final int textview=0x7f07000c;
         public static final int title=0x7f07006a;
         public static final int title_Layout=0x7f070045;
         public static final int topicList=0x7f070048;
@@ -214,9 +220,9 @@ public final class R {
     public static final class layout {
         public static final int att_item=0x7f030000;
         public static final int campus_fragment=0x7f030001;
-        public static final int discussion=0x7f030002;
-        public static final int disgradview_item=0x7f030003;
-        public static final int fav_item=0x7f030004;
+        public static final int dis_list_item=0x7f030002;
+        public static final int discussion=0x7f030003;
+        public static final int disgradview_item=0x7f030004;
         public static final int head=0x7f030005;
         public static final int image_pager_item=0x7f030006;
         public static final int image_pager_layout=0x7f030007;
@@ -323,58 +329,48 @@ public final class R {
         public static final int welcomeMSG=0x7f080040;
     }
     public static final class style {
-        /** 
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
- API 11 theme customizations can go here. 
-
-        Base application theme for API 14+. This theme completely replaces
-        AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
-    
- API 14 theme customizations can go here. 
-         */
-        public static final int AppBaseTheme=0x7f090025;
-        public static final int AuthorText_Large=0x7f090006;
-        public static final int AuthorText_Normal=0x7f090005;
-        public static final int AuthorText_Small=0x7f090007;
-        public static final int BodyText_Large=0x7f090010;
-        public static final int BodyText_Normal=0x7f09000e;
-        public static final int BodyText_Small=0x7f09000f;
-        public static final int Custom_Dialog=0x7f090003;
-        public static final int FavItemText_Large=0x7f090016;
-        public static final int FavItemText_Normal=0x7f090014;
-        public static final int FavItemText_Small=0x7f090015;
-        public static final int LinkText=0x7f090004;
-        public static final int LinkText_Big=0x7f09001a;
-        public static final int LinkText_Bold=0x7f090019;
-        public static final int LinkText_Bold_Big=0x7f09001b;
-        public static final int LinkText_Bold_Huge=0x7f09001c;
-        public static final int LinkText_Normal=0x7f090017;
-        public static final int LinkText_small=0x7f090018;
-        public static final int QuoteText_Large=0x7f090013;
-        public static final int QuoteText_Normal=0x7f090011;
-        public static final int QuoteText_Small=0x7f090012;
-        public static final int Theme_Start=0x7f090002;
-        public static final int TimeText_Large=0x7f09000a;
-        public static final int TimeText_Normal=0x7f090008;
-        public static final int TimeText_Small=0x7f090009;
-        public static final int TitleText_Large=0x7f09000d;
-        public static final int TitleText_Normal=0x7f09000b;
-        public static final int TitleText_Small=0x7f09000c;
-        public static final int footer_button=0x7f090001;
         /**  from fanfoudroid 
          */
-        public static final int main_tab_bottom=0x7f090000;
-        public static final int normalText=0x7f09001f;
-        public static final int normalText_Big=0x7f090023;
-        public static final int normalText_small=0x7f090020;
-        public static final int normalText_small_hint=0x7f090021;
-        public static final int normalText_span=0x7f090024;
-        public static final int normalText_tiny=0x7f090022;
-        public static final int user_name=0x7f09001d;
-        public static final int user_screen_name=0x7f09001e;
+        public static final int AppTheme=0x7f090000;
+        public static final int AuthorText_Large=0x7f090008;
+        public static final int AuthorText_Normal=0x7f090007;
+        public static final int AuthorText_Small=0x7f090009;
+        public static final int BodyText_Large=0x7f090012;
+        public static final int BodyText_Normal=0x7f090010;
+        public static final int BodyText_Small=0x7f090011;
+        public static final int Custom_Dialog=0x7f090005;
+        public static final int FavItemText_Large=0x7f090018;
+        public static final int FavItemText_Normal=0x7f090016;
+        public static final int FavItemText_Small=0x7f090017;
+        public static final int LayoutTheme=0x7f090001;
+        public static final int LinkText=0x7f090006;
+        public static final int LinkText_Big=0x7f09001c;
+        public static final int LinkText_Bold=0x7f09001b;
+        public static final int LinkText_Bold_Big=0x7f09001d;
+        public static final int LinkText_Bold_Huge=0x7f09001e;
+        public static final int LinkText_Normal=0x7f090019;
+        public static final int LinkText_small=0x7f09001a;
+        public static final int QuoteText_Large=0x7f090015;
+        public static final int QuoteText_Normal=0x7f090013;
+        public static final int QuoteText_Small=0x7f090014;
+        public static final int Theme_Start=0x7f090004;
+        public static final int TimeText_Large=0x7f09000c;
+        public static final int TimeText_Normal=0x7f09000a;
+        public static final int TimeText_Small=0x7f09000b;
+        public static final int TitleText_Large=0x7f09000f;
+        public static final int TitleText_Normal=0x7f09000d;
+        public static final int TitleText_Small=0x7f09000e;
+        public static final int footer_button=0x7f090003;
+        public static final int main_tab_bottom=0x7f090002;
+        public static final int normalText=0x7f090021;
+        public static final int normalText_Big=0x7f090025;
+        public static final int normalText_content=0x7f090027;
+        public static final int normalText_small=0x7f090022;
+        public static final int normalText_small_hint=0x7f090023;
+        public static final int normalText_span=0x7f090026;
+        public static final int normalText_tiny=0x7f090024;
+        public static final int user_name=0x7f09001f;
+        public static final int user_screen_name=0x7f090020;
     }
     public static final class xml {
         public static final int preference=0x7f040000;

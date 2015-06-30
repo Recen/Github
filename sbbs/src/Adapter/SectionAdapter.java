@@ -71,7 +71,7 @@ public class SectionAdapter extends BaseAdapter{
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = mInflater.inflate(com.recen.sbbs.R.layout.fav_item,
+			convertView = mInflater.inflate(com.recen.sbbs.R.layout.dis_list_item,
 					null);
 			holder.tv = (TextView) convertView
 					.findViewById(com.recen.sbbs.R.id.fav_item);

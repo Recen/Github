@@ -2,8 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/LayoutTheme"
     android:orientation="vertical" >
-    
+     <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dp" 
+        android:background="@drawable/dis_titlebar"
+		>
+        
+        <TextView 
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="个人中心"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/loginLayout" 
         android:layout_width="match_parent"
@@ -16,8 +31,10 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="50dp"          
-            android:src="@drawable/person"/>
+            android:layout_marginLeft="20dp"          
+            android:src="@drawable/person"
+            android:background="@drawable/gridview"
+            android:scaleType="fitXY"/>
         
         <Button
             android:id="@+id/loginButton"
@@ -33,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_gravity="center_vertical"
+            style="@style/normalText.content"
             android:textSize="25dp" 
             android:visibility="gone"/>
     </LinearLayout>
@@ -43,58 +61,142 @@
         android:orientation="vertical"
         android:layout_marginTop="20dp">
         
-        <TextView 
+          <LinearLayout 
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:background="@color/white"
+              android:orientation="horizontal">
+              
+             <ImageView 
+                 android:layout_width="20dp"
+                 android:layout_height="20dp"
+                 android:layout_gravity="center_vertical"
+                 android:scaleType="fitXY"
+                 android:layout_marginLeft="10dp"
+                 android:src="@drawable/my_topic"
+                 />
+        
+	         <TextView 
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center_vertical"
-            android:paddingLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/white1"
+            style="@style/normalText.content"
             android:text="我的帖子"
             android:textSize="20dp"/>
-         <TextView 
-            android:id="@+id/myEmail"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:background="@drawable/white1"
-            android:text="我的邮件"
-            android:textSize="20dp"/>
-          <TextView 
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:background="@drawable/white1"
-            android:text="我的文章"
-            android:textSize="20dp"/>
-           <TextView 
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:background="@drawable/white1"
-            android:text="我的收藏夹"
-            android:textSize="20dp"/>
-            <TextView 
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:background="@drawable/white1"
-            android:text="好友列表"
-            android:textSize="20dp"/>
+         </LinearLayout>
+         
+        
+        <LinearLayout 
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:background="@color/white"
+              android:orientation="horizontal">
+              
+             <ImageView 
+                 android:layout_width="20dp"
+                 android:layout_height="20dp"
+                 android:layout_gravity="center_vertical"
+                 android:scaleType="fitXY"
+                 android:layout_marginLeft="10dp"
+                 android:src="@drawable/my_email"
+                 />
+        
+	         <TextView 
+	            android:id="@+id/myEmail"
+	            android:layout_width="match_parent"
+	            android:layout_height="45dp"
+	            android:gravity="center_vertical"
+	            android:layout_marginLeft="10dp"
+	            android:background="@drawable/white1"
+	            style="@style/normalText.content"
+	            android:text="我的邮件"
+	            android:textSize="20dp"/>
+         </LinearLayout>
+         
+          <LinearLayout 
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:background="@color/white"
+              android:orientation="horizontal">
+              
+             <ImageView 
+                 android:layout_width="20dp"
+                 android:layout_height="20dp"
+                 android:layout_gravity="center_vertical"
+                 android:scaleType="fitXY"
+                 android:layout_marginLeft="10dp"
+                 android:src="@drawable/my_shoucang"
+                 />
+	            <TextView 
+	            android:layout_width="match_parent"
+	            android:layout_height="45dp"
+	            android:gravity="center_vertical"
+	            android:layout_marginLeft="10dp"
+	            android:background="@drawable/white1"
+	            style="@style/normalText.content"
+	            android:text="我的收藏夹"
+	            android:textSize="20dp"/>
+          </LinearLayout>
+             <LinearLayout 
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:background="@color/white"
+              android:orientation="horizontal">
+              
+             <ImageView 
+                 android:layout_width="20dp"
+                 android:layout_height="20dp"
+                 android:layout_gravity="center_vertical"
+                 android:scaleType="fitXY"
+                 android:layout_marginLeft="10dp"
+                 android:src="@drawable/my_friends"
+                 />
+	             <TextView 
+	            android:layout_width="match_parent"
+	            android:layout_height="45dp"
+	            android:gravity="center_vertical"
+	            android:layout_marginLeft="10dp"
+	            android:background="@drawable/white1"
+	            style="@style/normalText.content"
+	            android:text="好友列表"
+	            android:textSize="20dp"/>
+	         </LinearLayout>
+           
             
-            <TextView
-            android:id="@+id/setting" 
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="20dp"
-            android:background="@drawable/white1"
-            android:text="设置"
-            android:textSize="20dp"/>
+            <LinearLayout 
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:layout_marginTop="20dp"
+              android:background="@color/white"
+              android:orientation="horizontal">
+              
+             <ImageView 
+                 android:layout_width="20dp"
+                 android:layout_height="20dp"
+                 android:layout_gravity="center_vertical"
+                 android:scaleType="fitXY"
+                 android:layout_marginLeft="10dp"
+                 android:src="@drawable/my_setting"
+                 />
+	            <TextView
+	            android:id="@+id/setting" 
+	            android:layout_width="match_parent"
+	            android:layout_height="45dp"
+	            android:gravity="center_vertical"          
+	            android:layout_marginLeft="10dp"
+	            android:background="@drawable/white1"
+	            style="@style/normalText.content"
+	            android:text="设置"
+	            android:textSize="20dp"/>
+          </LinearLayout>
+            
     </LinearLayout>
 
 </LinearLayout>

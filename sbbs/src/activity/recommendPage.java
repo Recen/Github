@@ -82,8 +82,10 @@ public class recommendPage extends Fragment {
 	        tvTabCampus = (TextView) parentView.findViewById(R.id.tv_tab_2);
 	        if(currIndex == 0){
 	        	tvTabHot.setTextColor(Color.rgb(33, 171, 56));
+	        	tvTabCampus.setTextColor(Color.rgb(0, 0, 0));
 			}else {
 				tvTabCampus.setTextColor(Color.rgb(33, 171, 56));
+				tvTabHot.setTextColor(Color.rgb(0, 0, 0));
 			}
 	       
 	        tvTabHot.setOnClickListener(new MyOnClickListener(0));
