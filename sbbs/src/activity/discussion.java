@@ -56,7 +56,7 @@ public class discussion extends Fragment{
 	private boolean forceLoad = false;
 	private static final int MODE = 2;
 private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
-		
+		//任务监听器
 		private ProgressDialog pdialog;
 		/* (non-Javadoc)
 		 * @see Task.TaskAdapter#onPreExecute(Task.GenericTask)
@@ -67,7 +67,7 @@ private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
 			super.onPreExecute(task);
 			pdialog = new ProgressDialog(getActivity());
 			pdialog.setMessage(getResources().getString(R.string.loading));
-			pdialog.show();
+			pdialog.show();//显示正在加载的对话框
 			pdialog.setCanceledOnTouchOutside(false);
 		}
 
@@ -79,7 +79,7 @@ private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
 			// TODO Auto-generated method stub
 			super.onPostExecute(task, result);
 			pdialog.dismiss();
-			processResult(result);
+			processResult(result);//处理部分
 		}
 
 		@Override
@@ -101,9 +101,10 @@ private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
 		secAdapter = new SectionAdapter(getActivity());
 		secListView.setAdapter(secAdapter);
 		boardUrl = SBBSURLS.BOARD_SECTIONS;
-		
+		//界面的gridview填充是用下面的数组写死的
 		final String[]  section = {"本站系统","东南大学","电脑技术","学术科学","艺术文化","乡情校谊",
 							 "休闲娱乐","知性感性","人文信息","体坛风暴","校务信箱","社团群体"};
+		//这里就直接和Adapter联系
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.disgradview_item, section);
 		myGridView.setAdapter(adapter);
 		bindListener();
@@ -120,14 +121,14 @@ private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
 					int position, long id) {
 				// TODO Auto-generated method stub
 					//Toast.makeText(getActivity(), section[position]+"被点击", 20).show();
-				 	doRetrieve();
+				 	doRetrieve();//点到那个版块 就在这里执行
 				 	boardPosition = position;
-				 	mDrawerLayout.openDrawer(Gravity.RIGHT);					
+				 	mDrawerLayout.openDrawer(Gravity.RIGHT);//这里是抽屉效果的实现，点一下滑出来					
 			}
 		});
 		
 		secListView.setOnItemClickListener(new OnItemClickListener() {
-
+			//这部分绑定的就是滑出来的那个listview里的内容
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -151,7 +152,7 @@ private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
 		mRetrieveTask = new RetrieveSecTask();
 		Log.i(TAG, "abilitdsadasdasdasdy");
 		mRetrieveTask.setListener(mRetrieveHotTaskListener);
-		mRetrieveTask.execute(boardUrl);
+		mRetrieveTask.execute(boardUrl);//boardUrl是大板块的地址
 
 		Log.i(TAG, TAG + "-->doRetrieve");
 	}
@@ -162,8 +163,8 @@ private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
 			// TODO Auto-generated method stub
 			try {
 				Log.i(TAG, params[0]);
-				boardList = BBSOperator.getInstance().getAllBoards(params[0]);
-				Log.i(TAG, "---->"+boardList.get(2).get(2).getTitle());
+				boardList = BBSOperator.getInstance().getAllBoards(params[0]);//这是版块的内容，你看下面的调试信息就知道具体是什么了
+				Log.i(TAG, "---->"+boardList.get(2).get(2).getTitle());//这是调试
 				} catch (HttpException e) {
 					// TODO Auto-gsenerated catch block
 					e.printStackTrace();
@@ -190,13 +191,13 @@ private TaskListener mRetrieveHotTaskListener = new TaskAdapter() {
 			return;
 		}
 		forceLoad = false;
-		draw();
+		draw();//这个和hotfragment一样了
 		//goTop();
 
 	}	
 	
 	private void draw() {
-		secList = boardList.get(boardPosition);
+		secList = boardList.get(boardPosition);//boardPosition就是点击的是哪个位置，例如第一个是本站系统 0
 		secAdapter.refresh(secList);
 	}
 }
